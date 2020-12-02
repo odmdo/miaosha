@@ -8,6 +8,9 @@ public interface PromoService {
     //根据商品id获取该商品秒杀信息
     PromoModel getPromoByItemId(Integer itemId);
 
+    void publishPromo(Integer promoId);
+
+
 
     //判断当前时间是否秒杀活动即将开始或正在进行
 

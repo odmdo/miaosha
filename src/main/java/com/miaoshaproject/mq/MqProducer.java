@@ -18,9 +18,9 @@ import java.util.Map;
 @Component
 public class MqProducer {
     private DefaultMQProducer producer;
-    @Value("mq.nameserver.addr")
+    @Value("${mq.nameserver.addr}")
     private String nameAddr;
-    @Value("mq.topicname")
+    @Value("${mq.topicname}")
     private String topicName;
 
     @PostConstruct
@@ -30,13 +30,23 @@ public class MqProducer {
         producer.start();
     }
 
-    public SendResult asyncReduceStock(Integer itemId, Integer amount) throws InterruptedException, RemotingException, MQClientException, MQBrokerException {
+    public boolean asyncReduceStock(Integer itemId, Integer amount) {
         Map<String,Object> bodyMap = new HashMap<>();
         bodyMap.put("itemId",itemId);
         bodyMap.put("amount",amount);
         Message message = new Message(topicName,"increase",
                 JSON.toJSON(bodyMap).toString().getBytes(Charset.forName("UTF-8")));
-        return producer.send(message);
-
+        try {
+            producer.send(message);
+        } catch (MQClientException e) {
+            return false;
+        } catch (RemotingException e) {
+            return false;
+        } catch (MQBrokerException e) {
+            return false;
+        } catch (InterruptedException e) {
+            return false;
+        }
+        return true;
     }
 }

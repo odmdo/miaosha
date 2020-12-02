@@ -4,6 +4,7 @@ import com.miaoshaproject.controller.viewobject.ItemVO;
 import com.miaoshaproject.error.BusinessException;
 import com.miaoshaproject.response.CommonReturnType;
 import com.miaoshaproject.service.ItemService;
+import com.miaoshaproject.service.PromoService;
 import com.miaoshaproject.service.model.ItemModel;
 import org.joda.time.DateTimeUtils;
 import org.joda.time.format.DateTimeFormat;
@@ -31,6 +32,8 @@ public class ItemController extends BaseController {
 
     @Resource
     private RedisTemplate redisTemplate;
+    @Resource
+    private PromoService promoService;
 
 
     //创建商品
@@ -63,8 +66,6 @@ public class ItemController extends BaseController {
 
     }
 
-
-    //商品详情页浏览
     @RequestMapping(value = "/get",method = {RequestMethod.GET})
     @ResponseBody
     public CommonReturnType getItem(@RequestParam(name="id") Integer id){
@@ -81,6 +82,17 @@ public class ItemController extends BaseController {
 
         return CommonReturnType.create(itemVO);
 
+    }
+
+    //商品详情页浏览
+    @RequestMapping(value = "/publishpromo",method = {RequestMethod.GET})
+    @ResponseBody
+    public CommonReturnType publishpromo(@RequestParam(name="id") Integer id){
+
+        promoService.publishPromo(id);
+
+        return CommonReturnType.create(null);
+        
     }
 
     //商品列表页浏览
