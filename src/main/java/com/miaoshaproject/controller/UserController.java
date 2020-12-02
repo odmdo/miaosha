@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit;
 
 public class UserController extends BaseController{
 
-    @Autowired
+    @Resource
     private UserService userService;
 
     /*
@@ -104,7 +104,7 @@ public class UserController extends BaseController{
         userModel.setTelephone(telephone);
         userModel.setRegistMode("byPhone");
         //密码进行MD5加密
-        userModel.setEncrptPassword(EncodeByMD5(password));
+        userModel.setEncrptPassword(this.EncodeByMD5(password));
 
         userService.register(userModel);
 

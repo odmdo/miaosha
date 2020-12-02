@@ -12,29 +12,25 @@ import com.miaoshaproject.validator.ValidationResult;
 import com.miaoshaproject.validator.ValidatorImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sun.misc.BASE64Encoder;
 
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import javax.annotation.Resource;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     //注入用户Mapper组件
-    @Autowired
+    @Resource
     private UserDoMapper userDoMapper;
 
     //注入用户密码Mapper组件
-    @Autowired
+    @Resource
     private UserPasswordDoMapper userPasswordDoMapper;
 
 
-    @Autowired
+    @Resource
     private ValidatorImpl validator;
 
     @Override
